@@ -1,5 +1,4 @@
 NAME			:=	dbltoa.a
-# COMPILER		:=	cc
 COMPILER		:=	gcc
 RM				:=	rm -rf
 PRINT_NO_DIR	:=	--no-print-directory
@@ -8,45 +7,22 @@ PRINT_NO_DIR	:=	--no-print-directory
 CFLAGS			+=	-MMD -MP
 CFLAGS			+=	-Wall -Wextra
 # # Werror cannot go together with fsanitize, because fsanitize won't work correctly.
-# CFLAGS			+=	-Werror
-CFLAGS			+=	-g
+CFLAGS			+=	-Werror
+# CFLAGS			+=	-g
 # CFLAGS			+=	-fsanitize=address
-# CFLAGS			+=	-Wunused -Wuninitialized -Wunreachable-code
+CFLAGS			+=	-Wunused -Wuninitialized -Wunreachable-code
 # OFLAGS are optimization flags that might have been passed from the parent Makefile.
 CFLAGS			+=	$(OFLAGS)
 
-# ENABLE_MALLOC_WRAP := 0
-# ifeq ($(MAKECMDGOALS),malloc_wrap)
-#   ENABLE_MALLOC_WRAP := 1
-# endif
-
-# ifeq ($(MAKECMDGOALS),test)
-#   ENABLE_MALLOC_WRAP := 1
-# endif
-
-# # Apply the flags if malloc wrapping is enabled
-# ifeq ($(ENABLE_MALLOC_WRAP),1)
-
-ifeq ($(MAKECMDGOALS),malloc_wrap)
-	CFLAGS	+= -D MALLOC_WRAP=true
-	CFLAGS := $(filter-out -Ofast, $(CFLAGS))
-	CFLAGS := $(filter-out -O3, $(CFLAGS))
-	ifeq ($(shell uname -s),Linux)
-		CFLAGS	+= -Wl,--wrap=malloc
-	endif
-endif
-
-#		Build directory for objects and dependencies
-BUILD_DIR		:=	.build/
-INC_DIR			:=	include/
-TESTER_DIR		:=	tester/
-
-#		Source Directory
+#		Base Directories
 SRC_DIR			:=	src/
+INC_DIR			:=	include/
+BUILD_DIR		:=	.build/
 
 #		Extern Libraries
-EXT_DIR			:=	extern_libaries/libft/
-EXT_INC_DIR		:=	$(EXT_DIR)$(INC_DIR)
+EXT_DIR			:=	extern_libaries/
+EXT_LIB_DIR		:=	$(EXT_DIR)libft/
+EXT_INC_DIR		:=	$(EXT_LIB_DIR)$(INC_DIR)
 
 #		Source files by category
 DBTOA			:=	dbltoa.c					fraction_conversion.c			fraction_operations.c	\
@@ -55,7 +31,7 @@ DBTOA			:=	dbltoa.c					fraction_conversion.c			fraction_operations.c	\
 					ft_addition.c				ft_subtraction.c				ft_multiply.c			\
 					ft_division.c
 
-#	Extra Sources
+#		Extra Sources
 DBL_SRCS		:=	$(addprefix $(SRC_DIR), $(DBTOA))
 
 #		Generate object file names
@@ -63,9 +39,9 @@ DBL_OBJS		:=	$(DBL_SRCS:%.c=$(BUILD_DIR)%.o)
 
 #		Generate Dependency files
 DEPS			:=	$(DBL_OBJS:.o=.d)
+
 #		Header files
 HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h	
-# HEADERS			:=	$(addprefix $(INC_DIR), $(HEADERS_FILES))
 
 #		Remove these created files
 DELETE			:=	*.out																				\
@@ -87,11 +63,10 @@ $(BUILD_DIR)%.o: %.c $(HEADERS)
 	$(COMPILER) $(CFLAGS) -I $(INC_DIR) -I $(EXT_INC_DIR) -c $< -o $@
 
 libft:
-	git clone git@github.com:RJW-db/lib_private.git $(EXT_DIR)
-	@$(MAKE) $(PRINT_NO_DIR) -C $(EXT_DIR)
-
-called_by_libft: $(DBL_OBJS)
-
+	@if [ ! -d "$(EXT_LIB_DIR)" ]; then \
+		git clone git@github.com:RJW-db/lib_private.git $(EXT_LIB_DIR); \
+	fi
+	@$(MAKE) $(PRINT_NO_DIR) -C $(EXT_LIB_DIR) base
 
 clean:
 	@$(RM) $(BUILD_DIR) $(DELETE)
@@ -99,6 +74,7 @@ clean:
 
 fclean: clean
 	@$(RM) $(NAME)
+	@$(RM) $(EXT_DIR)
 	@printf "$(REMOVED)" $(NAME) $(CUR_DIR)
 
 re: fclean all
