@@ -41,7 +41,7 @@ DBL_OBJS		:=	$(DBL_SRCS:%.c=$(BUILD_DIR)%.o)
 DEPS			:=	$(DBL_OBJS:.o=.d)
 
 #		Header files
-HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h	
+HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h ../../include/libft.h
 
 #		Remove these created files
 DELETE			:=	*.out																				\
@@ -57,16 +57,21 @@ $(NAME): libft $(DBL_OBJS)
 	@printf "$(CREATED)" $@ $(CUR_DIR)
 
 #		Compile .c files to .o files
-
 $(BUILD_DIR)%.o: %.c $(HEADERS)
 	@mkdir -p $(@D)
-	$(COMPILER) $(CFLAGS) -I $(INC_DIR) -I $(EXT_INC_DIR) -c $< -o $@
+	$(COMPILER) $(CFLAGS) -I $(INC_DIR) -I $(EXT_INC_DIR) -I ../../include/ -c $< -o $@
 
 libft:
 	@if [ ! -d "$(EXT_LIB_DIR)" ]; then \
 		git clone git@github.com:RJW-db/lib_private.git $(EXT_LIB_DIR); \
 	fi
 	@$(MAKE) $(PRINT_NO_DIR) -C $(EXT_LIB_DIR) base
+
+#		standalone is when this is a submodule of libft and need different header locations
+standalone_build: $(DBL_OBJS)
+
+standalone:
+	@$(MAKE) EXT_INC_DIR="../../include/" standalone_build
 
 clean:
 	@$(RM) $(BUILD_DIR) $(DELETE)
@@ -85,7 +90,7 @@ print-%:
 #		Include dependencies
 -include $(DEPS)
 
-.PHONY:	all libft clean fclean re print-%
+.PHONY:	all libft standalone_build standalone clean fclean re print-%
 
 # ----------------------------------- colors --------------------------------- #
 BOLD			=	\033[1m
