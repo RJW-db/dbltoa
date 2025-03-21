@@ -6,13 +6,11 @@ PRINT_NO_DIR	:=	--no-print-directory
 #		Compiler flags
 CFLAGS			+=	-MMD -MP
 CFLAGS			+=	-Wall -Wextra
-# # Werror cannot go together with fsanitize, because fsanitize won't work correctly.
-CFLAGS			+=	-Werror
-# CFLAGS			+=	-g
-# CFLAGS			+=	-fsanitize=address
 CFLAGS			+=	-Wunused -Wuninitialized -Wunreachable-code
-# OFLAGS are optimization flags that might have been passed from the parent Makefile.
-CFLAGS			+=	$(OFLAGS)
+#		Werror cannot go together with fsanitize, because fsanitize won't work correctly.
+CFLAGS			+=	-Werror
+# CFLAGS			+=	-fsanitize=address
+# CFLAGS			+=	-g
 
 #		Base Directories
 SRC_DIR			:=	src/
@@ -44,9 +42,8 @@ DEPS			:=	$(DBL_OBJS:.o=.d)
 HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h ../../include/libft.h
 
 #		Remove these created files
-DELETE			:=	*.out																				\
-					.DS_Store																			\
-					*.dSYM/
+DELETE			:=	*.out			**/*.out			.DS_Store										\
+					**/.DS_Store	.dSYM/				**/.dSYM/
 
 #		Default target
 all: $(NAME)
