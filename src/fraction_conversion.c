@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:32 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/12 16:14:26 by rde-brui      ########   odam.nl         */
+/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 //	Static Funnctions
 static char	*double_to_bits(int64_t double_bits, char *bit_representation);
 static void	extract_expo_mant(int16_t *exponent, uint64_t *mant, char *strbits);
-static void	special_value(t_dbl *strs, double val, uint64_t mant, bool is_neg);
+static void	special_value(t_str *strs, double val, uint64_t mant, bool is_neg);
 
 /*
 * IEEE-754 Double Precision Format:
@@ -54,7 +54,7 @@ static void	special_value(t_dbl *strs, double val, uint64_t mant, bool is_neg);
 * 		S1111111 1111MMMM MMMMMMMM MMMMMMMM MMMMMMMM MMMMMMMM MMMMMMMM MMMMMMMM
 * 	- extract_expo_mant() subtracts the bias (1023), so we get 972 (2047 - 1075)
 */
-bool	fraction_conversion(double value, t_dbl *strings, bool *is_neg)
+bool	fraction_conversion(double value, t_str *strings, bool *is_neg)
 {
 	char		bit_representation[DBL_BIT_COUNT + 1];
 	int16_t		exp_value;
@@ -238,7 +238,7 @@ static void	extract_expo_mant(int16_t *exponent, uint64_t *mant, char *strbits)
 *		value = 0.0 and mantissa = 0, return "nan".
 *		value = -1.0 and mantissa = 0, return "-nan".
 */
-static void	special_value(t_dbl *strs, double val, uint64_t mant, bool is_neg)
+static void	special_value(t_str *strs, double val, uint64_t mant, bool is_neg)
 {
 	const char	nan_strings[2][5] = {"-nan", "nan"};
 

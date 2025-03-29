@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:38:30 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 02:49:08 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ typedef struct s_dbltoa
  * of a double value to its string representation, including the numerator,
  * denominator, result, and precision.
  */
-typedef struct s_dbl
+typedef struct s_str
 {
 	char		*s1;
 	char		*s2;
 	char		*result;
 	uint16_t	prec;
-}	t_dbl;
+}	t_str;
 
 /**
  * struct s_nbr - Structure to hold numerical string information
@@ -112,12 +112,12 @@ uint16_t	dbltoa_buff(double value, char *buff, uint16_t b_size);
 uint16_t	dbltoa_buff_prec(t_dbltoa dbl);
 
 //	Conversions
-bool		fraction_conversion(double value, t_dbl *strings, bool *is_neg);
+bool		fraction_conversion(double value, t_str *strings, bool *is_neg);
 bool		binary_to_decimal(const char *bin_str, char *dec_str, size_t size);
 char		*populate_numerator(char *num_str, uint64_t mant, int16_t expo);
 char		*populate_denominator(char *denom_str, int16_t expo, double value);
 void		scientific_notation(char *num, char *den, int16_t *digitexpo, double val);
-uint16_t	double_to_string(t_dbl *s, int16_t digit_exponent, bool is_neg);
+uint16_t	double_to_string(t_str *s, int16_t digit_exponent, bool is_neg);
 uint16_t	process_precision(char *result, uint16_t prec);
 uint16_t	set_precision(char *result, uint16_t prec, uint16_t dot_index);
 

@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:37:02 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/15 01:28:57 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 //	Static Functions
 static void	init_numbers(t_nbr *nbr, char *s1, char *s2);
-static void	process_digits(t_dbl *strings, t_nbr *nbr);
-static void	multiply_single_digit(t_dbl *s, t_nbr *nbr, int32_t i, int32_t j);
+static void	process_digits(t_str *strings, t_nbr *nbr);
+static void	multiply_single_digit(t_str *s, t_nbr *nbr, int32_t i, int32_t j);
 static void	process_carry(char *result, int32_t carry, int32_t pos);
 
 void	ft_multiply(char *s1, char *s2)
 {
 	char	result[MAX_DBL_STR_LEN + 1];
 	char	sign;
-	t_dbl	strings;
+	t_str	strings;
 	t_nbr	nbr;
 
 	intialize_buff(result);
@@ -30,7 +30,7 @@ void	ft_multiply(char *s1, char *s2)
 	if ((s1[0] == '-' && s2[0] != '-') || (s1[0] != '-' && s2[0] == '-'))
 		sign = '-';
 	init_numbers(&nbr, s1, s2);
-	strings = (t_dbl){.s1 = s1, .s2 = s2, .result = result};
+	strings = (t_str){.s1 = s1, .s2 = s2, .result = result};
 	process_digits(&strings, &nbr);
 	cpy_str(s1, result);
 	s1[0] = sign;
@@ -44,7 +44,7 @@ static void	init_numbers(t_nbr *nbr, char *s1, char *s2)
 	nbr->j_s2 = ft_strlen(s2 + nbr->sig_s2) - 1;
 }
 
-static void	process_digits(t_dbl *strings, t_nbr *nbr)
+static void	process_digits(t_str *strings, t_nbr *nbr)
 {
 	int32_t	i;
 	int32_t	j;
@@ -58,7 +58,7 @@ static void	process_digits(t_dbl *strings, t_nbr *nbr)
 	}
 }
 
-static void	multiply_single_digit(t_dbl *s, t_nbr *nbr, int32_t i, int32_t j)
+static void	multiply_single_digit(t_str *s, t_nbr *nbr, int32_t i, int32_t j)
 {
 	int32_t	pos;
 	int32_t	tmp;

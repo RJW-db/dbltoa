@@ -14,7 +14,7 @@
 #include <dbltoa.h>
 
 //	Static functions
-static uint16_t	dbltoa_convert(double value, t_dbl *strings, bool trim);
+static uint16_t	dbltoa_convert(double value, t_str *strings, bool trim);
 
 char	*dbltoa(double value)
 {
@@ -24,7 +24,7 @@ char	*dbltoa(double value)
 char	*dbltoa_precision(double value, uint16_t prec, bool round)
 {
 	char	result[MAX_DBL_BUFF];
-	t_dbl	strings;
+	t_str	strings;
 
 	strings.result = result;
 	strings.prec = prec;
@@ -44,7 +44,7 @@ uint16_t	dbltoa_buff(double value, char *buff, uint16_t b_size)
 uint16_t	dbltoa_buff_prec(t_dbltoa dbl)
 {
 	char		result[MAX_DBL_BUFF];
-	t_dbl		strings;
+	t_str		strings;
 	uint16_t	result_len;
 
 	if (dbl.buff != NULL && dbl.buff_size >= 1)
@@ -62,7 +62,7 @@ uint16_t	dbltoa_buff_prec(t_dbltoa dbl)
 	return (ft_strlcpy(dbl.buff, result, result_len + 1));
 }
 
-static uint16_t	dbltoa_convert(double value, t_dbl *strings, bool trim)
+static uint16_t	dbltoa_convert(double value, t_str *strings, bool trim)
 {
 	char		numerator[MAX_DBL_STR_LEN + 1];
 	char		denominator[MAX_DBL_STR_LEN + 1];

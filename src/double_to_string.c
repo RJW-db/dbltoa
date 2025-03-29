@@ -6,19 +6,19 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:35:36 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/18 03:07:09 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dbltoa.h>
 
 //	Static Functions
-static uint16_t	initialize_strings(t_dbl *s, int16_t *digitexp);
+static uint16_t	initialize_strings(t_str *s, int16_t *digitexp);
 static void		process_first_digit(char *result, char *num, char *deno);
 static void		insert_dec_point(char *res, char *num, uint16_t *len, int16_t *exp);
 static uint16_t	process_number_string(char *result, bool is_neg);
 
-uint16_t	double_to_string(t_dbl *s, int16_t digit_exponent, bool is_neg)
+uint16_t	double_to_string(t_str *s, int16_t digit_exponent, bool is_neg)
 {
 	char		tmp[MAX_DBL_STR_LEN + 1];
 	char		digit[MAX_DBL_STR_LEN + 1];
@@ -44,7 +44,7 @@ uint16_t	double_to_string(t_dbl *s, int16_t digit_exponent, bool is_neg)
 	return (process_number_string(s->result, is_neg));
 }
 
-static uint16_t	initialize_strings(t_dbl *s, int16_t *digitexp)
+static uint16_t	initialize_strings(t_str *s, int16_t *digitexp)
 {
 	int16_t		pos_exp;
 	uint16_t	len;
