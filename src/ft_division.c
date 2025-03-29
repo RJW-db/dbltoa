@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:51 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/13 20:17:43 by rde-brui      ########   odam.nl         */
+/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_division(char *s1, char *s2)
 		return ;
 	if (ft_strncmp(s1, s2, ft_strlen(s1) + 1) >= 0)
 		perform_division(s1, s2, result, &nbr);
-	cpy_str(s1, result);
+	cpy_str0(s1, result);
 }
 
 static void	perform_division(char *s1, char *den, char *result, t_nbr *nbr)

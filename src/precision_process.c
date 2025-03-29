@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 20:02:40 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/18 01:46:55 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ uint16_t	process_precision(char *result, uint16_t prec)
 	bool		is_neg;
 
 	if (result[0] == '-' && result[1] == '0' && result[2] == '\0')
-		cpy_str(result, "0");
+		cpy_str0(result, "0");
 	is_neg = (*result == '-');
 	if (is_neg == true)
 		result += is_neg;
@@ -53,7 +53,7 @@ static uint16_t	adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_
 	if (is_neg == true && res[0] == '0' && (res[1] != '.' || \
 	is_only_zero_decimals(res + 2) == true))
 	{
-		cpy_str(res - is_neg, res);
+		cpy_str0(res - is_neg, res);
 		is_neg = false;
 		--res;
 	}

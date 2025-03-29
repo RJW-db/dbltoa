@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:37:02 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_multiply(char *s1, char *s2)
 	init_numbers(&nbr, s1, s2);
 	strings = (t_str){.s1 = s1, .s2 = s2, .result = result};
 	process_digits(&strings, &nbr);
-	cpy_str(s1, result);
+	cpy_str0(s1, result);
 	s1[0] = sign;
 }
 

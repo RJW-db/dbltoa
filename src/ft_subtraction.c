@@ -6,7 +6,7 @@
 /*   By: jdobos <jdobos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 16:27:18 by rde-brui      #+#    #+#                 */
-/*   Updated: 2025/03/17 20:14:56 by rde-brui      ########   odam.nl         */
+/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static bool	subtract_values(char *s1, char *s2, t_nbr *nbr)
 
 static int8_t	swap_and_negate(char *s1, char *s2, t_nbr *nbr)
 {
-	cpy_str(s1, s2);
+	cpy_str0(s1, s2);
 	subtract_values(s1, s2, nbr);
 	if (s1[0] == '+')
 		s1[0] = '-';

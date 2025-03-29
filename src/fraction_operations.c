@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 02:52:56 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/18 03:01:44 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*populate_numerator(char *num_str, uint64_t mant, int16_t expo)
 		return (NULL);
 	if (expo > 0)
 	{
-		cpy_str(num_str + MAX_DBL_STR_LEN - mant_len, mant_bits);
+		cpy_str0(num_str + MAX_DBL_STR_LEN - mant_len, mant_bits);
 		intialize_buff(exp_str);
 		exp_str[MAX_DBL_STR_LEN - 1] = '2';
 		if (pow2(exp_str, expo) == NULL)
@@ -34,7 +34,7 @@ char	*populate_numerator(char *num_str, uint64_t mant, int16_t expo)
 		ft_multiply(num_str, exp_str);
 	}
 	else
-		cpy_str(num_str + MAX_DBL_STR_LEN - mant_len, mant_bits);
+		cpy_str0(num_str + MAX_DBL_STR_LEN - mant_len, mant_bits);
 	return (num_str);
 }
 
@@ -59,7 +59,7 @@ static char	*pow2(char *exp_str, int64_t exponent)
 	{
 		while (exponent > 1)
 		{
-			cpy_str(pow2, exp_str);
+			cpy_str0(pow2, exp_str);
 			ft_addition(exp_str, pow2);
 			--exponent;
 		}

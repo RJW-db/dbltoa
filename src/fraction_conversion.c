@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:32 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static char	*double_to_bits(int64_t double_bits, char *bit_representation)
 		int64_base(byte_value, "01", byte_buffer, BYTE + 1);
 		bit_count = BYTE - ft_strlen(byte_buffer);
 		ft_memset(bit_representation + bit_index, '0', bit_count);
-		cpy_str(bit_representation + bit_index + bit_count, byte_buffer);
+		cpy_str0(bit_representation + bit_index + bit_count, byte_buffer);
 		bit_index += BYTE;
 		--byte_index;
 	}
@@ -243,14 +243,14 @@ static void	special_value(t_str *strs, double val, uint64_t mant, bool is_neg)
 	const char	nan_strings[2][5] = {"-nan", "nan"};
 
 	if (mant == 0 && val > 0)
-		cpy_str(strs->result, "inf");
+		cpy_str0(strs->result, "inf");
 	else if (mant == 0 && val < 0)
-		cpy_str(strs->result, "-inf");
+		cpy_str0(strs->result, "-inf");
 	else
 	{
 		if (is_neg == false)
-			cpy_str(strs->result, "nan");
+			cpy_str0(strs->result, "nan");
 		else
-			cpy_str(strs->result, nan_strings[NEGATIVE_NAN_INDEX]);
+			cpy_str0(strs->result, nan_strings[NEGATIVE_NAN_INDEX]);
 	}
 }

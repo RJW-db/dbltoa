@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:35:36 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ uint16_t	double_to_string(t_str *s, int16_t digit_exponent, bool is_neg)
 	{
 		
 		// intialize_buff(tmp);
-		cpy_str(tmp, s->s1);
+		cpy_str0(tmp, s->s1);
 		ft_division(tmp, s->s2);
 		s->result[len++] = tmp[MAX_DBL_STR_LEN - 1];
 		while (tmp[MAX_DBL_STR_LEN - 1]-- != '0')
@@ -80,7 +80,7 @@ static void	process_first_digit(char *result, char *num, char *deno)
 	intialize_buff(tmp);
 	intialize_buff(digit);
 	digit[MAX_DBL_STR_LEN - 2] = '1';
-	cpy_str(tmp, num);
+	cpy_str0(tmp, num);
 	ft_division(tmp, deno);
 	result[1] = tmp[MAX_DBL_STR_LEN - 1];
 	while (tmp[MAX_DBL_STR_LEN - 1] != '0')
