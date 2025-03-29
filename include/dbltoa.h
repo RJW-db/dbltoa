@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:38:30 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/18 04:12:21 by rjw           ########   odam.nl         */
+/*   Updated: 2025/03/29 02:49:08 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@
 // 2047 (max exponent value in IEEE 754) - 1075 (DBL_EXP_NORMAL_BIAS)
 # define DBL_EXP_MAX 972
 
-typedef struct s_dbltoa_params
+typedef struct s_dbltoa
 {
 	double		value;
 	char		*buff;
 	uint16_t	buff_size;
 	uint16_t	precision;
 	bool		trim_trailing_zeros;
-}	t_dbltoa_params;
+}	t_dbltoa;
 
 /**
  * struct s_dbl - Structure to hold double conversion information
@@ -109,7 +109,7 @@ typedef union u_double_bitcast
 char		*dbltoa(double dbl);
 char		*dbltoa_precision(double value, uint16_t prec, bool round);
 uint16_t	dbltoa_buff(double value, char *buff, uint16_t b_size);
-uint16_t	dbltoa_buff_prec(t_dbltoa_params dbl);
+uint16_t	dbltoa_buff_prec(t_dbltoa dbl);
 
 //	Conversions
 bool		fraction_conversion(double value, t_dbl *strings, bool *is_neg);

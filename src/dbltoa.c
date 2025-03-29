@@ -35,13 +35,13 @@ char	*dbltoa_precision(double value, uint16_t prec, bool round)
 //	Standard precision of 2
 uint16_t	dbltoa_buff(double value, char *buff, uint16_t b_size)
 {
-	t_dbltoa_params	dbl;
+	t_dbltoa	dbl;
 
-	dbl = (t_dbltoa_params){value, buff, b_size, 2, false};
+	dbl = (t_dbltoa){value, buff, b_size, 2, false};
 	return (dbltoa_buff_prec(dbl));
 }
 
-uint16_t	dbltoa_buff_prec(t_dbltoa_params dbl)
+uint16_t	dbltoa_buff_prec(t_dbltoa dbl)
 {
 	char		result[MAX_DBL_BUFF];
 	t_dbl		strings;
