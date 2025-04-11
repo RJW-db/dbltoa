@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:37:02 by rjw           #+#    #+#                 */
-/*   Updated: 2025/04/11 14:38:09 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 15:20:35 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	multiply_single_digit(t_str *s, t_nbr *nbr, int32_t i, int32_t j)
 			tmp = ((s->s2[nbr->sig_s2 + i] - '0') * \
 				(s->s1[nbr->sig_s1 + j] - '0')) + \
 				(s->result[pos] - '0') + carry;
-			s->result[pos] = (tmp % DECIMAL_NBR) + '0';
+			s->result[pos] = (char)((tmp % DECIMAL_NBR) + '0');
 			carry = tmp / DECIMAL_NBR;
 		}
 		--j;
@@ -88,7 +88,7 @@ static void	process_carry(char *result, int32_t carry, int32_t pos)
 	while (carry > 0 && pos >= 1)
 	{
 		tmp = (result[pos] - '0') + carry;
-		result[pos] = (tmp % DECIMAL_NBR) + '0';
+		result[pos] = (char)((tmp % DECIMAL_NBR) + '0');
 		carry = tmp / DECIMAL_NBR;
 		--pos;
 	}

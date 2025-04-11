@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 20:02:40 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 15:01:19 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ uint16_t	process_precision(char *result, uint16_t prec)
 	padding = 0;
 	if (prec > 0)
 		padding = zero_padding(result + res_index, true, prec);
-	return (res_index + is_neg + padding);
+	return ((uint16_t)(res_index + is_neg + padding));
 }
 
 static uint16_t	adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_neg)
@@ -63,13 +63,14 @@ static uint16_t	adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_
 	while (res[dot_idx] != '\0' && res[dot_idx] != '.')
 		++dot_idx;
 	if (res[dot_idx] == '\0')
-		return (res_len + is_neg + zero_padding(res + dot_idx, true, prec));
+		return ((uint16_t)(res_len + is_neg + \
+		zero_padding(res + dot_idx, true, prec)));
 	dec_count = 0;
 	while (res[dot_idx + 1 + dec_count] != '\0')
 		++dec_count;
 	if (prec > dec_count)
-		return (res_len + is_neg + \
-		zero_padding(res + ++dot_idx + dec_count, false, prec - dec_count));
+		return ((uint16_t)(res_len + (uint16_t)is_neg + \
+		zero_padding(res + ++dot_idx + dec_count, false, prec - dec_count)));
 	return (res_len + is_neg);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/15 01:55:10 by rjw           #+#    #+#                 */
-/*   Updated: 2025/04/11 14:32:29 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 15:17:49 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static uint16_t	add_precision(char *s1, const char *s2)
 	while (i >= 0 || j >= 0 || carry != 0)
 	{
 		if (i >= 0 && s1[i] != '.')
-			carry += s1[i] - '0';
+			carry += (int16_t)(s1[i] - '0');
 		if (j >= 0 && s2[j] != '.')
-			carry += s2[j] - '0';
+			carry += (int16_t)(s2[j] - '0');
 		handle_carry(s1, &s1_len, i, &carry);
 		--i;
 		--j;
@@ -67,7 +67,7 @@ static uint16_t	add_precision(char *s1, const char *s2)
 	i = s1_len;
 	while (i > 0 && s1[i] == '0')
 		--i;
-	i -= (s1[i] == '.');
+	i = (int16_t)(i - (s1[i] == '.'));
 	s1[i + 1] = '\0';
 	return ((uint16_t)i + 1);
 }
@@ -77,11 +77,11 @@ static void	handle_carry(char *s1, int16_t *len, int16_t i, int16_t *carry)
 	if (i < 0 || s1[i] != '.')
 	{
 		if (i >= 0)
-			s1[i] = (*carry % DECIMAL_NBR) + '0';
+			s1[i] = (char)((*carry % DECIMAL_NBR) + '0');
 		else
 		{
 			charmove(s1 + 1, s1, (size_t)(*len));
-			s1[0] = (*carry % DECIMAL_NBR) + '0';
+			s1[0] = (char)((*carry % DECIMAL_NBR) + '0');
 			++(*len);
 		}
 		*carry /= DECIMAL_NBR;

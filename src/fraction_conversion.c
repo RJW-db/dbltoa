@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:32 by rjw           #+#    #+#                 */
-/*   Updated: 2025/04/11 14:17:09 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:51:46 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char	*double_to_bits(int64_t double_bits, char *bit_representation)
 	bit_index = 0;
 	while (byte_index >= 0)
 	{
-		byte_value = double_bits >> (byte_index * BYTE) & BYTE_MASK;
+		byte_value = (uint8_t)((double_bits >> (byte_index * BYTE)) & BYTE_MASK);
 		int64_base(byte_value, "01", byte_buffer, BYTE + 1);
 		bit_count = BYTE - ft_strlen(byte_buffer);
 		ft_memset(bit_representation + bit_index, '0', bit_count);

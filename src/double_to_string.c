@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:35:36 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:54:08 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,5 +136,5 @@ static uint16_t	process_number_string(char *result, bool is_neg)
 	result[len + is_neg] = '\0';
 	if (is_dot == true)
 		return (0);
-	return (len + is_neg + (offset == 0));
+	return ((uint16_t)(len + is_neg + (offset == 0)));
 }

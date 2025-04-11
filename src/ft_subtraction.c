@@ -6,7 +6,7 @@
 /*   By: jdobos <jdobos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 16:27:18 by rde-brui      #+#    #+#                 */
-/*   Updated: 2025/04/11 14:36:34 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 15:19:39 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	subtract_values(char *s1, char *s2, t_nbr *nbr)
 			s1[nbr->i_s1] += DECIMAL_NBR;
 			s1[nbr->i_s1 - 1] -= 1;
 		}
-		s1[nbr->i_s1] -= (s2[nbr->j_s2] - '0');
+		s1[nbr->i_s1] -= (char)(s2[nbr->j_s2] - '0');
 		--nbr->j_s2;
 		--nbr->i_s1;
 	}
