@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 02:12:12 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/15 01:28:57 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:36:12 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_addition(char *s1, char *s2)
 	s1 += (*s1 == '+');
 	s2 += (*s2 == '+');
 	carry = 0;
-	len = ft_strlen(s1);
+	len = (int32_t)ft_strlen(s1);
 	i = len - 1;
 	while (i >= 0)
 	{
@@ -33,7 +33,7 @@ void	ft_addition(char *s1, char *s2)
 	}
 	if (carry > 0)
 	{
-		charmove(s1 + 1, s1, len);
-		s1[0] = carry + '0';
+		charmove(s1 + 1, s1, (size_t)len);
+		s1[0] = (char)carry + '0';
 	}
 }

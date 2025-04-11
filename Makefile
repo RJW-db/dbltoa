@@ -1,16 +1,18 @@
 NAME			:=	dbltoa.a
-COMPILER		:=	gcc
-RM				:=	rm -rf
-PRINT_NO_DIR	:=	--no-print-directory
 
-#		Compiler flags
-CFLAGS			+=	-MMD -MP
+#	Compiler and Flags
+COMPILER		:=	gcc
 CFLAGS			+=	-Wall -Wextra
-CFLAGS			+=	-Wunused -Wuninitialized -Wunreachable-code
-#		Werror cannot go together with fsanitize, because fsanitize won't work correctly.
 CFLAGS			+=	-Werror
-# CFLAGS			+=	-fsanitize=address
+CFLAGS			+=	-Wunreachable-code -Wpedantic -Wconversion -Wshadow
+CFLAGS			+=	-MMD -MP
 # CFLAGS			+=	-g
+#	Werror cannot go together with fsanitize, because fsanitize won't work correctly.
+# CFLAGS			+=	-fsanitize=address
+
+#	Utilities
+PRINT_NO_DIR	:=	--no-print-directory
+RM				:=	rm -rf
 
 #		Base Directories
 SRC_DIR			:=	src/
@@ -39,7 +41,8 @@ DBL_OBJS		:=	$(DBL_SRCS:%.c=$(BUILD_DIR)%.o)
 DEPS			:=	$(DBL_OBJS:.o=.d)
 
 #		Header files
-HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h ../../include/libft.h
+HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h
+# HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h ../../include/libft.h
 
 #		Remove these created files
 DELETE			:=	*.out			**/*.out			.DS_Store										\

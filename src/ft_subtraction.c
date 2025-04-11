@@ -6,7 +6,7 @@
 /*   By: jdobos <jdobos@student.42.fr>                +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 16:27:18 by rde-brui      #+#    #+#                 */
-/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:36:34 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int16_t	ft_subtraction(char *s1, char *s2)
 	t_nbr	nbr;
 
 	init_struct(s1, s2, &nbr);
-	comparison_result = ft_strncmp(s1, s2, ft_strlen(s1) + 1);
+	comparison_result = (int16_t)ft_strncmp(s1, s2, ft_strlen(s1) + 1);
 	if (comparison_result == 0)
 		return (set_to_zero(s1));
 	else if (comparison_result > 0)

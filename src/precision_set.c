@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/15 01:55:10 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/15 01:56:06 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:32:29 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static uint16_t	add_precision(char *s1, const char *s2)
 	int16_t	i;
 	int16_t	j;
 
-	s1_len = ft_strlen(s1) - 1;
-	j = ft_strlen(s2) - 1;
+	s1_len = (int16_t)ft_strlen(s1) - 1;
+	j = (int16_t)ft_strlen(s2) - 1;
 	carry = 0;
 	i = s1_len;
 	while (i >= 0 || j >= 0 || carry != 0)
@@ -69,7 +69,7 @@ static uint16_t	add_precision(char *s1, const char *s2)
 		--i;
 	i -= (s1[i] == '.');
 	s1[i + 1] = '\0';
-	return (i + 1);
+	return ((uint16_t)i + 1);
 }
 
 static void	handle_carry(char *s1, int16_t *len, int16_t i, int16_t *carry)
@@ -80,8 +80,9 @@ static void	handle_carry(char *s1, int16_t *len, int16_t i, int16_t *carry)
 			s1[i] = (*carry % DECIMAL_NBR) + '0';
 		else
 		{
-			charmove(s1 + 1, s1, ++(*len));
+			charmove(s1 + 1, s1, (size_t)(*len));
 			s1[0] = (*carry % DECIMAL_NBR) + '0';
+			++(*len);
 		}
 		*carry /= DECIMAL_NBR;
 	}

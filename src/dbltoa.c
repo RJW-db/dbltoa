@@ -59,7 +59,7 @@ uint16_t	dbltoa_buff_prec(t_dbltoa dbl)
 		ft_strlcpy(dbl.buff, result, dbl.buff_size);
 		return (--dbl.buff_size);
 	}
-	return (ft_strlcpy(dbl.buff, result, result_len + 1));
+	return ((uint16_t)ft_strlcpy(dbl.buff, result, result_len + 1));
 }
 
 static uint16_t	dbltoa_convert(double value, t_str *strings, bool trim)
@@ -76,7 +76,7 @@ static uint16_t	dbltoa_convert(double value, t_str *strings, bool trim)
 	strings->s1 = numerator;
 	strings->s2 = denominator;
 	if (fraction_conversion(value, strings, &is_neg) == false)
-		return (ft_strlen(strings->result));
+		return ((uint16_t)ft_strlen(strings->result));
 	scientific_notation(numerator, denominator, &digitexpo, value);
 	result_len = double_to_string(strings, digitexpo, is_neg);
 	if (result_len > 0 && (trim == true || strings->prec == 0))

@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:38:30 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 02:55:32 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:24:58 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,6 @@ void		ft_division(char *s1, char *s2);
 //	Utils
 void		intialize_buff(char *buff);
 void		init_struct(char *s1, char *s2, t_nbr *num);
-size_t		strlen_and_dot(const char *str, bool *is_dot);
+uint16_t	strlen_and_dot(const char *str, bool *is_dot);
 uint16_t	trim_trailing_zeros(char *result, uint16_t res_len);
 #endif

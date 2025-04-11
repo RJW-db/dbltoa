@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:32 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:17:09 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,8 +216,8 @@ static void	extract_expo_mant(int16_t *exponent, uint64_t *mant, char *strbits)
 	extract_substr(strbits, DBL_EXP_BITS + 1, DBL_MANT_BITS, mant_bits);
 	binary_to_decimal(exp_bits, exp_str, sizeof(exp_str));
 	binary_to_decimal(mant_bits, mant_str, sizeof(mant_str));
-	*exponent = atoi64(exp_str);
-	*mant = atoi64(mant_str);
+	*exponent = (int16_t)atoi64(exp_str);
+	*mant = atui64(mant_str);
 	if (*exponent != 0)
 		*exponent -= DBL_EXP_NORMAL_BIAS;
 	else

@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:37:02 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:38:09 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	ft_multiply(char *s1, char *s2)
 
 static void	init_numbers(t_nbr *nbr, char *s1, char *s2)
 {
-	nbr->sig_s1 = find_char_not(s1 + (s1[0] == '+' || s1[0] == '-'), '0');
-	nbr->sig_s2 = find_char_not(s2 + (s2[0] == '+' || s2[0] == '-'), '0');
-	nbr->i_s1 = ft_strlen(s1 + nbr->sig_s1) - 1;
-	nbr->j_s2 = ft_strlen(s2 + nbr->sig_s2) - 1;
+	nbr->sig_s1 = (int32_t)find_char_not(s1 + (*s1 == '+' || *s1 == '-'), '0');
+	nbr->sig_s2 = (int32_t)find_char_not(s2 + (*s2 == '+' || *s2 == '-'), '0');
+	nbr->i_s1 = (int32_t)ft_strlen(s1 + nbr->sig_s1) - 1;
+	nbr->j_s2 = (int32_t)ft_strlen(s2 + nbr->sig_s2) - 1;
 }
 
 static void	process_digits(t_str *strings, t_nbr *nbr)

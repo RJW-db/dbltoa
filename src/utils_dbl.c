@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/16 02:52:35 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/17 14:34:43 by rde-brui      ########   odam.nl         */
+/*   Updated: 2025/04/11 14:35:13 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ void	init_struct(char *s1, char *s2, t_nbr *num)
 	num->sig_s1 = (s1[0] == '+' || s1[0] == '-');
 	while (s1[num->sig_s1] == '0')
 		++num->sig_s1;
-	num->i_s1 = num->sig_s1 + ft_strlen(s1 + num->sig_s1);
+	num->i_s1 = num->sig_s1 + (int32_t)ft_strlen(s1 + num->sig_s1);
 	num->i_s1 -= (num->i_s1 > 0);
 	num->sig_s2 = (s2[0] == '+' || s2[0] == '-');
 	while (s2[num->sig_s2] == '0')
 		++num->sig_s2;
-	num->j_s2 = num->sig_s2 + ft_strlen(s2 + num->sig_s2);
+	num->j_s2 = num->sig_s2 + (int32_t)ft_strlen(s2 + num->sig_s2);
 	num->j_s2 -= (num->j_s2 > 0);
 }
 
-size_t	strlen_and_dot(const char *str, bool *is_dot)
+uint16_t	strlen_and_dot(const char *str, bool *is_dot)
 {
 	const char	*tmp = str;
 
@@ -44,7 +44,7 @@ size_t	strlen_and_dot(const char *str, bool *is_dot)
 			*is_dot = true;
 		++tmp;
 	}
-	return (tmp - str);
+	return ((uint16_t)(tmp - str));
 }
 
 uint16_t	trim_trailing_zeros(char *result, uint16_t res_len)

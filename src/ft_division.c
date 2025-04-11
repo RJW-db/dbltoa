@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:51 by rjw           #+#    #+#                 */
-/*   Updated: 2025/03/29 03:51:38 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 14:43:19 by rjw           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	perform_division(char *s1, char *den, char *result, t_nbr *nbr)
 	ft_memset(denominator, '\0', DBL_MANT_DECIMAL_DIGITS);
 	numerator[0] = '0';
 	denominator[0] = '0';
-	quotient = MAX_DBL_STR_LEN - nbr->sig_s2;
+	quotient = (uint8_t)(MAX_DBL_STR_LEN - nbr->sig_s2);
 	if (quotient > DBL_MANT_DECIMAL_DIGITS - 1)
 		quotient = DBL_MANT_DECIMAL_DIGITS - 1;
 	ft_strlcpy(denominator + 1, den + nbr->sig_s2, quotient);
@@ -59,11 +59,11 @@ static uint8_t	is_division_result_equal(char *num_str, char *den_str)
 {
 	const int64_t	num = atoi64(num_str);
 	const int64_t	den = atoi64(den_str);
-	int64_t			quotient;
+	uint8_t			quotient;
 
 	if (den > 0)
 	{
-		quotient = num / den;
+		quotient = (uint8_t)(num / den);
 		if (quotient == (num / (den + 1)))
 			return (quotient);
 	}
