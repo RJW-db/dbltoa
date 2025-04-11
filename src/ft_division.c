@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:51 by rjw           #+#    #+#                 */
-/*   Updated: 2025/04/11 14:43:19 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 17:38:57 by rde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	perform_division(char *s1, char *den, char *result, t_nbr *nbr)
 	quotient = is_division_result_equal(numerator, denominator);
 	if (quotient == 0)
 		quotient = find_quotient(s1, den);
-	result[MAX_DBL_STR_LEN - 1] = quotient + '0';
+	result[MAX_DBL_STR_LEN - 1] = (char)(quotient + '0');
 }
 
 static uint8_t	is_division_result_equal(char *num_str, char *den_str)
