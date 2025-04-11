@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/15 01:55:10 by rjw           #+#    #+#                 */
-/*   Updated: 2025/04/11 15:17:49 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/11 18:38:45 by rde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ static void	handle_carry(char *s1, int16_t *len, int16_t i, int16_t *carry)
 			s1[i] = (char)((*carry % DECIMAL_NBR) + '0');
 		else
 		{
+			++(*len);
 			charmove(s1 + 1, s1, (size_t)(*len));
 			s1[0] = (char)((*carry % DECIMAL_NBR) + '0');
-			++(*len);
 		}
 		*carry /= DECIMAL_NBR;
 	}
