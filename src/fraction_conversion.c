@@ -6,7 +6,7 @@
 /*   By: rjw <rjw@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/12 01:36:32 by rjw           #+#    #+#                 */
-/*   Updated: 2025/04/11 14:51:46 by rjw           ########   odam.nl         */
+/*   Updated: 2025/04/17 15:50:51 by rde-brui      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,9 +242,9 @@ static void	special_value(t_str *strs, double val, uint64_t mant, bool is_neg)
 {
 	const char	nan_strings[2][5] = {"-nan", "nan"};
 
-	if (mant == 0 && val > 0)
+	if (mant == 0 && val == HUGE_VAL)
 		cpy_str0(strs->result, "inf");
-	else if (mant == 0 && val < 0)
+	else if (mant == 0 && val == -HUGE_VAL)
 		cpy_str0(strs->result, "-inf");
 	else
 	{
