@@ -13,16 +13,15 @@
 #ifndef DBLTOA_H
 # define DBLTOA_H
 
-# include <math.h>		//	INFINITY, NAN
-# include <stddef.h>	//	size_t
-# include <stdint.h>	//	int16_t, uint16_t
+# include <math.h> // INFINITY, NAN
+# include <stddef.h>
+# include <stdint.h>
 # include <stdbool.h>
-# include <libft.h>
-
 # include <stdlib.h>
 # include <stdio.h>
+# include "libftx.h"
 
-// //	longest numbers -__DBL_DENORM_MIN__ is 1077 characters long + terminator
+//	longest numbers -__DBL_DENORM_MIN__ is 1077 characters long + terminator
 # define MAX_DBL_STR_LEN 1078
 //	DBL_DENORM_MIN (1078) + DBL_MAX (310) + dot + terminator = 1388
 # define MAX_DBL_BUFF 1388
@@ -107,7 +106,7 @@ typedef union u_double_bitcast
 }	t_bitcast;
 
 char		*dbltoa(double dbl);
-char		*dbltoa_precision(double value, uint16_t prec, bool round);
+char		*dbltoa_precision(double value, uint16_t prec, bool trim);
 uint16_t	dbltoa_buff(double value, char *buff, uint16_t b_size);
 uint16_t	dbltoa_buff_prec(t_dbltoa dbl);
 

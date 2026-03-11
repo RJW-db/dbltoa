@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 void	ft_addition(char *s1, char *s2)
 {
@@ -33,7 +33,7 @@ void	ft_addition(char *s1, char *s2)
 	}
 	if (carry > 0)
 	{
-		charmove(s1 + 1, s1, (size_t)len);
+		ft_memmove(s1 + 1, s1, (size_t)len);
 		s1[0] = (char)carry + '0';
 	}
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 #if defined(__linux__)
 # define NEGATIVE_NAN_INDEX 0

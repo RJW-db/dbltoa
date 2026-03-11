@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 //	Static Functions
 static bool		set_to_zero(char *s1);

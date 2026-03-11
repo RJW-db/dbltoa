@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 //	Static Functions
 static void	init_numbers(t_nbr *nbr, char *s1, char *s2);

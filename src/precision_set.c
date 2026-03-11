@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 //	Static functions
 static void		handle_carry(char *s1, int16_t *len, int16_t i, int16_t *carry);
@@ -81,7 +81,7 @@ static void	handle_carry(char *s1, int16_t *len, int16_t i, int16_t *carry)
 		else
 		{
 			++(*len);
-			charmove(s1 + 1, s1, (size_t)(*len));
+			ft_memmove(s1 + 1, s1, (size_t)(*len));
 			s1[0] = (char)((*carry % DECIMAL_NBR) + '0');
 		}
 		*carry /= DECIMAL_NBR;

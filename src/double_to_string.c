@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 //	Static Functions
 static uint16_t	initialize_strings(t_str *s, int16_t *digitexp);
@@ -132,7 +132,7 @@ static uint16_t	process_number_string(char *result, bool is_neg)
 	}
 	if (is_neg == true)
 		result[0] = '-';
-	charmove(result + is_neg, result + offset, len);
+	ft_memmove(result + is_neg, result + offset, len);
 	result[len + is_neg] = '\0';
 	if (is_dot == true)
 		return (0);

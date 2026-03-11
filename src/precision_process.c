@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 //	Static functions
 static uint16_t	adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_neg);

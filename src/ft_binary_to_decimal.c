@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 static uint16_t	base_length(uint64_t nbr, uint64_t base);
 static void		convert_base(uint64_t nbu, char *base, uint64_t b_val, char *result);

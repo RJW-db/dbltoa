@@ -11,33 +11,33 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <dbltoa.h>
+#include "dbltoa.h"
 
-//	Static functions
+#define DBLTOA_STANDARD_PREC 2
+
 static uint16_t	dbltoa_convert(double value, t_str *strings, bool trim);
 
 char	*dbltoa(double value)
 {
-	return (dbltoa_precision(value, 2, false));
+	return (dbltoa_precision(value, DBLTOA_STANDARD_PREC, false));
 }
 
-char	*dbltoa_precision(double value, uint16_t prec, bool round)
+char	*dbltoa_precision(double value, uint16_t prec, bool trim)
 {
 	char	result[MAX_DBL_BUFF];
 	t_str	strings;
 
 	strings.result = result;
 	strings.prec = prec;
-	(void)dbltoa_convert(value, &strings, round);
+	(void)dbltoa_convert(value, &strings, trim);
 	return (ft_strdup(result));
 }
 
-//	Standard precision of 2
 uint16_t	dbltoa_buff(double value, char *buff, uint16_t b_size)
 {
 	t_dbltoa	dbl;
 
-	dbl = (t_dbltoa){value, buff, b_size, 2, false};
+	dbl = (t_dbltoa){value, buff, b_size, DBLTOA_STANDARD_PREC, false};
 	return (dbltoa_buff_prec(dbl));
 }
 

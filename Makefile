@@ -1,77 +1,110 @@
 NAME			:=	dbltoa.a
 
-#	Compiler and Flags
-COMPILER		:=	gcc
-CFLAGS			+=	-Wall -Wextra
-CFLAGS			+=	-Werror
-CFLAGS			+=	-Wunreachable-code -Wpedantic -Wconversion -Wshadow
-CFLAGS			+=	-MMD -MP
-# CFLAGS			+=	-g
-#	Werror cannot go together with fsanitize, because fsanitize won't work correctly.
-# CFLAGS			+=	-fsanitize=address
+MAKEFLAGS		+=	-j
+COMPILER		:=	cc
 
-#	Utilities
+BASE_FLAGS		:=	-std=c99 -Wall -Wextra -Werror
+
+PEDANTIC		:=	-Wpedantic -pedantic-errors -Wundef -Wstrict-prototypes
+
+WARNINGS		:=	-Wshadow -Wconversion -Wsign-conversion			\
+					-Wformat=2 -Wuninitialized -Wunreachable-code
+
+CAST_WARNINGS	:=	-Wbad-function-cast
+ifeq ($(shell $(COMPILER) --version | grep -c "gcc"),1)
+CAST_WARNINGS	+=	-Wcast-function-type
+endif
+
+DEPFLAGS		:=	-MMD -MP
+
+OPTIMIZATION	:=	-O2
+SECURITY		:=	-fstack-protector-strong
+ifeq ($(shell uname -s),Linux)
+SECURITY		+=	-D_FORTIFY_SOURCE=2
+FSANITIZE		:=	leak
+endif
+
+SANITIZERS		:=	-fsanitize=$(FSANITIZE),address,undefined,null,integer-divide-by-zero,signed-integer-overflow,bounds,alignment
+DEBUG_FLAGS		:=	-fno-omit-frame-pointer
+
+CFLAGS			:=	$(BASE_FLAGS) $(PEDANTIC) $(WARNINGS) $(CAST_WARNINGS) \
+					$(DEPFLAGS) $(OPTIMIZATION) $(SECURITY)
+
+ifneq ($(filter valgrind,$(MAKECMDGOALS)),)
+CFLAGS			+=	-g $(DEBUG_FLAGS)
+else ifneq ($(filter debug,$(MAKECMDGOALS)),)
+CFLAGS			+=	-g3 $(SANITIZERS) $(DEBUG_FLAGS) -fno-sanitize-recover=all
+endif
+
+ifneq ($(filter malloc,$(MAKECMDGOALS)),)
+CFLAGS			+=	-D MALLOC_WRAP=true
+endif
+
 PRINT_NO_DIR	:=	--no-print-directory
 RM				:=	rm -rf
 
-#		Base Directories
-SRC_DIR			:=	src/
-INC_DIR			:=	include/
-BUILD_DIR		:=	.build/
+SRC_DIR			:=	src
+INC_DIR			:=	include
+BUILD_DIR		:=	.build
+SUB_EXT_INC		:=	../../include
 
-#		Extern Libraries
-EXT_DIR			:=	extern_libaries/
-EXT_LIB_DIR		:=	$(EXT_DIR)libft/
-EXT_INC_DIR		:=	$(EXT_LIB_DIR)$(INC_DIR)
+# Extern Library
+EXT_DIR			:=	extern_libary
+EXT_LIB			:=	$(EXT_DIR)/libftx
+EXT_INC			:=	$(EXT_LIB)/$(INC_DIR)
+LIBFTX_OBJ_DIR	:=	$(BUILD_DIR)/libftx
+LIB_A			:=	libftx.a
 
-#		Source files by category
 DBTOA			:=	dbltoa.c					fraction_conversion.c			fraction_operations.c	\
 					ft_binary_to_decimal.c		scientific_notation.c			double_to_string.c		\
 					precision_process.c			precision_set.c					utils_dbl.c				\
 					ft_addition.c				ft_subtraction.c				ft_multiply.c			\
 					ft_division.c
 
-#		Extra Sources
-DBL_SRCS		:=	$(addprefix $(SRC_DIR), $(DBTOA))
+# Generate source file names
+SRC				:=	$(addprefix $(SRC_DIR)/, $(DBTOA))
 
-#		Generate object file names
-DBL_OBJS		:=	$(DBL_SRCS:%.c=$(BUILD_DIR)%.o)
+# Generate object file names
+OBJ				:=	$(SRC:%.c=$(BUILD_DIR)/%.o)
 
-#		Generate Dependency files
-DEPS			:=	$(DBL_OBJS:.o=.d)
+# Generate Dependency files
+DEPS			:=	$(OBJ:.o=.d)
 
-#		Header files
-HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h
-# HEADERS			:=	$(INC_DIR)dbltoa.h $(EXT_INC_DIR)libft.h ../../include/libft.h
+# Creates libftx library, unless dbltoa is being built as a submodule of libftx
+CREATE_LIBFTX	:=	$(MAKE) $(PRINT_NO_DIR) -C $(EXT_LIB) SUBMODULES_CMD= $(LIB_A) $(filter debug,$(MAKECMDGOALS))
 
-#		Remove these created files
-DELETE			:=	*.out			**/*.out			.DS_Store										\
-					**/.DS_Store	.dSYM/				**/.dSYM/
+# Ensures libftx is cloned if missing, then sets up dbltoa as needed for libftx
+CLONE_LIBFTX	:=	\
+	@if [ ! -d "$(EXT_LIB)" ]; then \
+		git clone git@github.com:RJW-db/lib_private.git $(EXT_LIB); \
+	fi; \
+	$(CREATE_LIBFTX)
 
-#		Default target
+DELETE			:=	*.out			**/*.out		.DS_Store	\
+					**/.DS_Store	.dSYM/			**/.dSYM/
+
 all: $(NAME)
 
-#		Main target
-$(NAME): libft $(DBL_OBJS)
-	ar rcs $(NAME) $(DBL_OBJS)
+$(NAME): libftx $(OBJ)
+	mkdir -p $(LIBFTX_OBJ_DIR)
+	cd $(LIBFTX_OBJ_DIR) && ar x ../../$(EXT_LIB)/$(LIB_A)
+	ar rcs $(NAME) $(OBJ) $(LIBFTX_OBJ_DIR)/*.o
 	@printf "$(CREATED)" $@ $(CUR_DIR)
 
-#		Compile .c files to .o files
-$(BUILD_DIR)%.o: %.c $(HEADERS)
+$(BUILD_DIR)/%.o: %.c | libftx
 	@mkdir -p $(@D)
-	$(COMPILER) $(CFLAGS) -I $(INC_DIR) -I $(EXT_INC_DIR) -I ../../include/ -c $< -o $@
+	$(COMPILER) $(CFLAGS) -I $(INC_DIR) -I $(EXT_INC) -c $< -o $@
 
-libft:
-	@if [ ! -d "$(EXT_LIB_DIR)" ]; then \
-		git clone git@github.com:RJW-db/lib_private.git $(EXT_LIB_DIR); \
-	fi
-	@$(MAKE) $(PRINT_NO_DIR) -C $(EXT_LIB_DIR) base
+# $(CLONE_LIBFTX) is set to nothing when dbltoa is used as a submodule in libftx,
+# preventing nested cloning of libftx inside dbltoa.
+libftx:
+	$(CLONE_LIBFTX)
 
-#		standalone is when this is a submodule of libft and need different header locations
-standalone_build: $(DBL_OBJS)
+# It allows passing the correct include path for the external library if used as a submodule
+submodule_build: $(OBJ)
 
-standalone:
-	@$(MAKE) EXT_INC_DIR="../../include/" standalone_build
+submodule:
+	@$(MAKE) EXT_INC="$(SUB_EXT_INC)" submodule_build $(filter debug,$(MAKECMDGOALS))
 
 clean:
 	@$(RM) $(BUILD_DIR) $(DELETE)
@@ -80,29 +113,37 @@ clean:
 fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) $(EXT_DIR)
+	@rm -f $(INC_DIR)/libftx.h
 	@printf "$(REMOVED)" $(NAME) $(CUR_DIR)
 
-re: fclean all
+re:
+	$(MAKE) $(PRINT_NO_DIR) fclean
+	$(MAKE) $(PRINT_NO_DIR) all
+
+# Submodule: skip `all` to avoid parallel conflicts. Standalone: triggers `all`.
+valgrind: $(if $(and $(CLONE_LIBFTX),$(filter valgrind,$(MAKECMDGOALS))),all)
+debug: $(if $(and $(CLONE_LIBFTX),$(filter debug,$(MAKECMDGOALS))),all)
 
 print-%:
 	$(info $($*))
 
-#		Include dependencies
 -include $(DEPS)
 
-.PHONY:	all libft standalone_build standalone clean fclean re print-%
+.PHONY: all libftx submodule_build submodule	\
+		clean fclean re							\
+		valgrind debug print-%
 
-# ----------------------------------- colors --------------------------------- #
-BOLD			=	\033[1m
-GREEN			=	\033[32m
-MAGENTA			=	\033[35m
-CYAN			=	\033[36m
-RESET			=	\033[0m
+# Terminal markup
+BOLD			:=	\033[1m
+GREEN			:=	\033[32m
+MAGENTA			:=	\033[35m
+CYAN			:=	\033[36m
+RESET			:=	\033[0m
 
-R_MARK_UP		=	$(MAGENTA)$(BOLD)
-CA_MARK_UP		=	$(GREEN)$(BOLD)
+R_MARK_UP		:=	$(MAGENTA)$(BOLD)
+CA_MARK_UP		:=	$(GREEN)$(BOLD)
 
-# ----------------------------------- messages ------------------------------- #
+# Current directory and formatted status messages
 CUR_DIR			:=	$(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 REMOVED			:=	$(R_MARK_UP)REMOVED $(CYAN)%s$(MAGENTA) (%s) $(RESET)\n
 CREATED			:=	$(CA_MARK_UP)CREATED $(CYAN)%s$(GREEN) (%s) $(RESET)\n

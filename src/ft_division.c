@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dbltoa.h>
+#include "dbltoa.h"
 
 //	Static Functions
 static void		perform_division(char *s1, char *den, char *result, t_nbr *nbr);
