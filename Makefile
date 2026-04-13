@@ -100,7 +100,7 @@ libftx:
 submodule_build: $(OBJ)
 
 submodule:
-	@$(MAKE) EXT_INC="$(SUB_EXT_INC)" submodule_build $(filter debug,$(MAKECMDGOALS))
+	@$(MAKE) EXT_INC="$(SUB_EXT_INC)" submodule_build $(filter debug valgrind,$(MAKECMDGOALS))
 
 clean:
 	@$(RM) $(BUILD_DIR) $(DELETE)
