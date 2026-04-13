@@ -36,10 +36,6 @@ else ifneq ($(filter debug,$(MAKECMDGOALS)),)
 CFLAGS			+=	-g3 $(SANITIZERS) $(DEBUG_FLAGS) -fno-sanitize-recover=all
 endif
 
-ifneq ($(filter malloc,$(MAKECMDGOALS)),)
-CFLAGS			+=	-D MALLOC_WRAP=true
-endif
-
 PRINT_NO_DIR	:=	--no-print-directory
 RM				:=	rm -rf
 
@@ -71,7 +67,7 @@ OBJ				:=	$(SRC:%.c=$(BUILD_DIR)/%.o)
 DEPS			:=	$(OBJ:.o=.d)
 
 # Creates libftx library, unless dbltoa is being built as a submodule of libftx
-CREATE_LIBFTX	:=	$(MAKE) $(PRINT_NO_DIR) -C $(EXT_LIB) SUBMODULES_CMD= $(LIB_A) $(filter debug,$(MAKECMDGOALS))
+CREATE_LIBFTX	:=	$(MAKE) $(PRINT_NO_DIR) -C $(EXT_LIB) SUBMODULES_CMD= $(LIB_A) $(filter debug valgrind,$(MAKECMDGOALS))
 
 # Ensures libftx is cloned if missing, then sets up dbltoa as needed for libftx
 CLONE_LIBFTX	:=	\
