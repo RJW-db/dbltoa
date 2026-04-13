@@ -15,7 +15,8 @@
 //	Static Function
 static int16_t	calculate_exponent(double nbr);
 
-void	scientific_notation(char *num, char *den, int16_t *digitexpo, double val)
+void	\
+scientific_notation(char *num, char *den, int16_t *digitexpo, double val)
 {
 	char	digit[MAX_DBL_STR_LEN + 1];
 

@@ -13,7 +13,8 @@
 #include "dbltoa.h"
 
 //	Static functions
-static uint16_t	adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_neg);
+static uint16_t	adjust_prec(
+					char *res, uint16_t res_len, uint16_t prec, bool is_neg);
 static bool		is_only_zero_decimals(char *result);
 uint16_t		zero_padding(char *result, bool is_dot, uint16_t prec);
 
@@ -45,13 +46,14 @@ uint16_t	process_precision(char *result, uint16_t prec)
 	return ((uint16_t)(res_index + is_neg + padding));
 }
 
-static uint16_t	adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_neg)
+static uint16_t	\
+adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_neg)
 {
 	uint16_t	dec_count;
 	uint16_t	dot_idx;
 
-	if (is_neg == true && res[0] == '0' && (res[1] != '.' || \
-	is_only_zero_decimals(res + 2) == true))
+	if (is_neg == true && res[0] == '0' && (res[1] != '.'
+			|| is_only_zero_decimals(res + 2) == true))
 	{
 		cpy_str0(res - is_neg, res);
 		is_neg = false;
@@ -64,13 +66,13 @@ static uint16_t	adjust_prec(char *res, uint16_t res_len, uint16_t prec, bool is_
 		++dot_idx;
 	if (res[dot_idx] == '\0')
 		return ((uint16_t)(res_len + is_neg + \
-		zero_padding(res + dot_idx, true, prec)));
+zero_padding(res + dot_idx, true, prec)));
 	dec_count = 0;
 	while (res[dot_idx + 1 + dec_count] != '\0')
 		++dec_count;
 	if (prec > dec_count)
 		return ((uint16_t)(res_len + (uint16_t)is_neg + \
-		zero_padding(res + ++dot_idx + dec_count, false, prec - dec_count)));
+zero_padding(res + ++dot_idx + dec_count, false, prec - dec_count)));
 	return (res_len + is_neg);
 }
 

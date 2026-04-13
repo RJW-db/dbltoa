@@ -82,15 +82,15 @@ static char	*double_to_bits(int64_t double_bits, char *bit_representation)
 	int16_t	byte_index;
 	size_t	bit_index;
 	size_t	bit_count;
-	uint8_t	byte_value;
+	uint8_t	byte_val;
 
 	bit_representation[DBL_BIT_COUNT] = '\0';
 	byte_index = DBL_BYTES - 1;
 	bit_index = 0;
 	while (byte_index >= 0)
 	{
-		byte_value = (uint8_t)((double_bits >> (byte_index * BYTE)) & BYTE_MASK);
-		int64_base(byte_value, "01", byte_buffer, BYTE + 1);
+		byte_val = (uint8_t)((double_bits >> (byte_index * BYTE)) & BYTE_MASK);
+		int64_base(byte_val, "01", byte_buffer, BYTE + 1);
 		bit_count = BYTE - ft_strlen(byte_buffer);
 		ft_memset(bit_representation + bit_index, '0', bit_count);
 		cpy_str0(bit_representation + bit_index + bit_count, byte_buffer);

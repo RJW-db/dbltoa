@@ -21,7 +21,8 @@ char	*populate_numerator(char *num_str, uint64_t mant, int16_t expo)
 	char	exp_str[MAX_DBL_STR_LEN + 1];
 	size_t	mant_len;
 
-	mant_len = int64_base((int64_t)mant, DECIMAL_BASE, mant_bits, sizeof(mant_bits));
+	mant_len = int64_base(
+			(int64_t)mant, DECIMAL_BASE, mant_bits, sizeof(mant_bits));
 	if (mant_len >= MAX_DBL_STR_LEN)
 		return (NULL);
 	if (expo > 0)

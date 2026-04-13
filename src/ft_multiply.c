@@ -70,9 +70,10 @@ static void	multiply_single_digit(t_str *s, t_nbr *nbr, int32_t i, int32_t j)
 		pos = MAX_DBL_STR_LEN - 1 - (nbr->j_s2 - i) - (nbr->i_s1 - j);
 		if (pos >= 1)
 		{
-			tmp = ((s->s2[nbr->sig_s2 + i] - '0') * \
-				(s->s1[nbr->sig_s1 + j] - '0')) + \
-				(s->result[pos] - '0') + carry;
+			tmp = (s->s2[nbr->sig_s2 + i] - '0');
+			tmp = tmp * (s->s1[nbr->sig_s1 + j] - '0');
+			tmp = tmp + (s->result[pos] - '0');
+			tmp = tmp + carry;
 			s->result[pos] = (char)((tmp % DECIMAL_NBR) + '0');
 			carry = tmp / DECIMAL_NBR;
 		}

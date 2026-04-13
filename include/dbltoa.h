@@ -115,7 +115,8 @@ bool		fraction_conversion(double value, t_str *strings, bool *is_neg);
 bool		binary_to_decimal(const char *bin_str, char *dec_str, size_t size);
 char		*populate_numerator(char *num_str, uint64_t mant, int16_t expo);
 char		*populate_denominator(char *denom_str, int16_t expo, double value);
-void		scientific_notation(char *num, char *den, int16_t *digitexpo, double val);
+void		scientific_notation(
+				char *num, char *den, int16_t *digitexpo, double val);
 uint16_t	double_to_string(t_str *s, int16_t digit_exponent, bool is_neg);
 uint16_t	process_precision(char *result, uint16_t prec);
 uint16_t	set_precision(char *result, uint16_t prec, uint16_t dot_index);

@@ -15,7 +15,8 @@
 //	Static Functions
 static uint16_t	initialize_strings(t_str *s, int16_t *digitexp);
 static void		process_first_digit(char *result, char *num, char *deno);
-static void		insert_dec_point(char *res, char *num, uint16_t *len, int16_t *exp);
+static void		insert_dec_point(
+					char *res, char *num, uint16_t *len, int16_t *exp);
 static uint16_t	process_number_string(char *result, bool is_neg);
 
 uint16_t	double_to_string(t_str *s, int16_t digit_exponent, bool is_neg)
@@ -29,10 +30,9 @@ uint16_t	double_to_string(t_str *s, int16_t digit_exponent, bool is_neg)
 	intialize_buff(digit);
 	digit[MAX_DBL_STR_LEN - 2] = '1';
 	intialize_buff(zero);
-	while (ft_strncmp(s->s1, zero, MAX_DBL_STR_LEN) != 0 && len < MAX_DBL_STR_LEN)
+	while (ft_strncmp(s->s1, zero, MAX_DBL_STR_LEN) != 0
+		&& len < MAX_DBL_STR_LEN)
 	{
-		
-		// intialize_buff(tmp);
 		cpy_str0(tmp, s->s1);
 		ft_division(tmp, s->s2);
 		s->result[len++] = tmp[MAX_DBL_STR_LEN - 1];
