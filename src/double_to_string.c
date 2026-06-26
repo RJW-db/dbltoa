@@ -57,7 +57,7 @@ static uint16_t	initialize_strings(t_str *s, int16_t *digitexp)
 	if (*digitexp < 0)
 	{
 		len = 0;
-		pos_exp = -(*digitexp);
+		pos_exp = (int16_t)(-*digitexp);
 		while (len < pos_exp)
 			++len;
 		len += 2;
